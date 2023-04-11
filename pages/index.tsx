@@ -19,13 +19,12 @@ const Home: NextPage = () => {
       connection.getBalance(key).then(balance => {
         setBalance(balance / web3.LAMPORTS_PER_SOL)
       })
-      connection.getAccountInfo(key).then(acc => {
-        setIsExecutable(acc!.executable)
+      connection.getAccountInfo(key).then(info => {
+        setIsExecutable(info?.executable ?? false);
       })
     } catch (error) {
       setAddress('')
       setBalance(0)
-      setIsExecutable(false)
       alert(error)
     }
   }
@@ -39,7 +38,7 @@ const Home: NextPage = () => {
         <AddressForm handler={addressSubmittedHandler} />
         <p>{`Address: ${address}`}</p>
         <p>{`Balance: ${balance} SOL`}</p>
-        <p>{`Is it executable: ${isExecutable ? "Yeah": "Nope"}`}</p>
+        <p>{`Is it executable: ${isExecutable ? 'Yep' : 'Nope'}`}</p>
       </header>
     </div>
   )
