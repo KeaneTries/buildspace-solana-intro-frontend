@@ -1,47 +1,28 @@
-import type { NextPage } from 'next'
-import { useState } from 'react'
-import Head from 'next/head'
-import Image from 'next/image'
+import React from 'react'
+import { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
-import AddressForm from '../components/AddressForm'
-import * as web3 from '@solana/web3.js'
+import { AppBar } from '../components/AppBar'
+import Head from 'next/head'
+import { PingButton } from '../components/PingButton'
 
-const Home: NextPage = () => {
-  const [balance, setBalance] = useState(0)
-  const [address, setAddress] = useState('')
-  const [isExecutable, setIsExecutable] = useState(false)
 
- const addressSubmittedHandler = (address: string) => {
-    try {
-      setAddress(address)
-      const key = new web3.PublicKey(address)
-      const connection = new web3.Connection(web3.clusterApiUrl('devnet'))
-      connection.getBalance(key).then(balance => {
-        setBalance(balance / web3.LAMPORTS_PER_SOL)
-      })
-      connection.getAccountInfo(key).then(info => {
-        setIsExecutable(info?.executable ?? false);
-      })
-    } catch (error) {
-      setAddress('')
-      setBalance(0)
-      alert(error)
-    }
-  }
+const Home: NextPage = (props) => {
 
   return (
     <div className={styles.App}>
-      <header className={styles.AppHeader}>
-        <p>
-          Start Your Solana Journey
-        </p>
-        <AddressForm handler={addressSubmittedHandler} />
-        <p>{`Address: ${address}`}</p>
-        <p>{`Balance: ${balance} SOL`}</p>
-        <p>{`Is it executable: ${isExecutable ? 'Yep' : 'Nope'}`}</p>
-      </header>
+      <Head>
+        <title>Wallet-Adapter Example</title>
+        <meta
+          name="description"
+          content="Wallet-Adapter Example"
+        />
+      </Head>
+        <AppBar />
+        <div className={styles.AppBody}>
+          <PingButton/>
+        </div>
     </div>
-  )
+  );
 }
 
-export default Home
+export default Home;
