@@ -1,10 +1,8 @@
-import React from 'react'
 import { NextPage } from 'next'
 import styles from '../styles/Home.module.css'
 import { AppBar } from '../components/AppBar'
+import { SendSolForm } from '../components/SendSolForm'
 import Head from 'next/head'
-import { PingButton } from '../components/PingButton'
-
 
 const Home: NextPage = (props) => {
 
@@ -17,10 +15,11 @@ const Home: NextPage = (props) => {
           content="Wallet-Adapter Example"
         />
       </Head>
-        <AppBar />
-        <div className={styles.AppBody}>
-          <PingButton/>
-        </div>
+      <AppBar />
+      <div className={styles.AppBody}>
+        <p>Display Balance Here</p>
+        <SendSolForm />
+      </div>
     </div>
   );
 }
